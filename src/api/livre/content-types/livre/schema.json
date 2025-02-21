@@ -1,0 +1,50 @@
+{
+  "kind": "collectionType",
+  "collectionName": "livres",
+  "info": {
+    "singularName": "livre",
+    "pluralName": "livres",
+    "displayName": "livre"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "isbn": {
+      "type": "uid"
+    },
+    "titre": {
+      "type": "string"
+    },
+    "auteur": {
+      "type": "string"
+    },
+    "description": {
+      "type": "text"
+    },
+    "couverture": {
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ],
+      "type": "media",
+      "multiple": false
+    },
+    "users": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "plugin::users-permissions.user",
+      "mappedBy": "livre"
+    },
+    "type": {
+      "type": "enumeration",
+      "enum": [
+        "SF",
+        "technique",
+        "Roman"
+      ]
+    }
+  }
+}
