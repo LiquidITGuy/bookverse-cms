@@ -369,9 +369,40 @@ export interface AdminUser extends Struct.CollectionTypeSchema {
   };
 }
 
+export interface ApiCommentaireCommentaire extends Struct.CollectionTypeSchema {
+  collectionName: 'commentaires';
+  info: {
+    displayName: 'commentaire';
+    pluralName: 'commentaires';
+    singularName: 'commentaire';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    auteur: Schema.Attribute.String;
+    contenu: Schema.Attribute.Blocks;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    livre: Schema.Attribute.Relation<'manyToOne', 'api::livre.livre'>;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::commentaire.commentaire'
+    > &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
 export interface ApiLivreLivre extends Struct.CollectionTypeSchema {
   collectionName: 'livres';
   info: {
+    description: '';
     displayName: 'livre';
     pluralName: 'livres';
     singularName: 'livre';
@@ -381,6 +412,10 @@ export interface ApiLivreLivre extends Struct.CollectionTypeSchema {
   };
   attributes: {
     auteur: Schema.Attribute.String;
+    commentaires: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::commentaire.commentaire'
+    >;
     couverture: Schema.Attribute.Media<
       'images' | 'files' | 'videos' | 'audios'
     >;
@@ -915,6 +950,7 @@ declare module '@strapi/strapi' {
       'admin::transfer-token': AdminTransferToken;
       'admin::transfer-token-permission': AdminTransferTokenPermission;
       'admin::user': AdminUser;
+      'api::commentaire.commentaire': ApiCommentaireCommentaire;
       'api::livre.livre': ApiLivreLivre;
       'plugin::content-releases.release': PluginContentReleasesRelease;
       'plugin::content-releases.release-action': PluginContentReleasesReleaseAction;

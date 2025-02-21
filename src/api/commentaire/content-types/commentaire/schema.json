@@ -1,0 +1,26 @@
+{
+  "kind": "collectionType",
+  "collectionName": "commentaires",
+  "info": {
+    "singularName": "commentaire",
+    "pluralName": "commentaires",
+    "displayName": "commentaire"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "attributes": {
+    "auteur": {
+      "type": "string"
+    },
+    "contenu": {
+      "type": "blocks"
+    },
+    "livre": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::livre.livre",
+      "inversedBy": "commentaires"
+    }
+  }
+}
